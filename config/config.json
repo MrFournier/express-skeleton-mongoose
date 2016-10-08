@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "accountant",
+    "password": "secret",
+    "database": "accountant_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "accountant",
+    "password": "secret",
+    "database": "accountant_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "accountant",
+    "password": "secret",
+    "database": "accountant_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

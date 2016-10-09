@@ -8,16 +8,30 @@ module.exports = function(sequelize, DataTypes) {
   var Agent = sequelize.define('Agent', {
     email: { 
       type: DataTypes.STRING,
+      allowNull: false,
       unique: true,
       validate: {
-        notNull: true,
-        notEmpty: true 
+        notEmpty: true,
+        isUnique: function (value, next) {
+          var self = this;
+          Agent.find({ where: {email: value} })
+            .then(function (agent) {
+              // Reject if a different user wants to use the same email
+              if (agent && self.id !== agent.id) {
+                return next('That email is taken');
+              }
+              return next();
+            })
+            .catch(function (err) {
+              return next(err);
+            });
+        }
       }
     },
     password: {
       type:  DataTypes.STRING,
+      allowNull: false,
       validate: {
-        notNull: true,
         notEmpty: true 
       }
     }

@@ -93,5 +93,31 @@ describe('Agent', function() {
         });
       });
     });
+
+    /**
+     * .validPassword
+     */
+    describe('.validPassword', function() {
+      beforeEach(function(done) {
+        agent.save().then(function(obj) {
+          done();
+        });
+      });
+
+      it('returns true if the password is a match', function(done) {
+        Agent.validPassword('secret', agent.password, function(err, res) {
+          expect(res).toEqual(agent);
+          done();
+        }, agent);
+      });
+
+      it('returns false if the password is not a match', function(done) {
+        Agent.validPassword('wrongsecretpassword', agent.password, function(err, res) {
+          expect(res).toBe(false);
+          done();
+        }, agent);
+      });
+
+    });
   });
 });

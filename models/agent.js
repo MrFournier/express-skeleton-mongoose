@@ -40,8 +40,8 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
       },
-      validPassword: function(password, passwd, done, agent) {
-        bcrypt.compare(password, passwd, function(err, isMatch) {
+      validPassword: function(password, hash, done, agent) {
+        bcrypt.compare(password, hash, function(err, isMatch) {
           if (err) console.log(err);
           if (isMatch) {
             return done(null, agent);

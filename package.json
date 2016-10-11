@@ -25,6 +25,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.11.0",
-    "sqlite3": "^3.1.6"
+    "sequelize-fixtures": "^0.5.5",
+    "sqlite3": "^3.1.6",
+    "zombie": "^4.2.1"
   }
 }

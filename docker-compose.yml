@@ -1,11 +1,9 @@
 node:
   build: .
   #  restart: always
-  #command: node_modules/.bin/nodemon app.js
-  command: node_modules/.bin/nodemon ./bin/www DEBUG=accountant:*
-  #  command:  node_modules/.bin/nodemon ./bin/www 
+  command: node ./bin/www DEBUG=accountant:*
   environment:
-    NODE_ENV: development
+    NODE_ENV: staging
   ports:
     - '3000:3000'
   volumes:
@@ -19,6 +17,7 @@ postgres:
   environment:
     - POSTGRES_USER=accountant
     - POSTGRES_PASSWORD=secret
+    - POSTGRES_DB=accountant_staging
   volumes_from:
     - accountant_data
 

@@ -1,0 +1,6 @@
+accountant:
+  build: .
+  environment:
+    NODE_ENV: production
+  ports:
+    - '80:3000'

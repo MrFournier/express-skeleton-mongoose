@@ -1,0 +1,24 @@
+node:
+  build: .
+  #  restart: always
+  #command: node_modules/.bin/nodemon app.js
+  command: node_modules/.bin/nodemon ./bin/www DEBUG=accountant:*
+  #  command:  node_modules/.bin/nodemon ./bin/www 
+  environment:
+    NODE_ENV: development
+  ports:
+    - '3000:3000'
+  volumes:
+    - .:/home/app/accountant
+    - /home/app/accountant/node_modules
+  links:
+   - postgres
+postgres:
+  #  restart: always
+  image: postgres
+  environment:
+    - POSTGRES_USER=accountant
+    - POSTGRES_PASSWORD=secret
+  volumes_from:
+    - accountant_data
+

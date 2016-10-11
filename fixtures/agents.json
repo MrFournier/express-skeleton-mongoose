@@ -1,0 +1,9 @@
+[
+  {
+    "model": "Agent",
+    "data": {
+      "email": "daniel@example.com",
+      "password": "secret" 
+    }
+  }
+]

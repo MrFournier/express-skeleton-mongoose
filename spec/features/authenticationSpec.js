@@ -4,7 +4,7 @@ const models = require('../../models');
 
 Browser.localhost('example.com', 3000);
 
-describe('login', function() {
+describe('authentication', function() {
 
   var browser, agent;
 

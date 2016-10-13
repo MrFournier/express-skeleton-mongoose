@@ -44,7 +44,7 @@ passport.use(new LocalStrategy({
     usernameField: 'email'
   },
   function(email, password, done) {
-    models.Agent.findOne({ email: email }).then(function (agent) {
+    models.Agent.findOne({ where: { email: email } }).then(function (agent) {
       if (!agent) { return done(null, false); }
       models.Agent.validPassword(password, agent.password, function(err, res) {
         if (err) console.log(err);

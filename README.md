@@ -1,14 +1,15 @@
-accountant
-==========
+express-skeleton
+================
 
-Automated cash-flow accounting.
+Quick start Express skeleton app with tests.
 
 # Development
 
 Clone and install dependencies:
 
 ```
-cd accountant && npm install
+git clone https://github.com/RaphaelDeLaGhetto/express-skeleton.git
+cd express-skeleton && npm install
 ```
 
 Seed database:

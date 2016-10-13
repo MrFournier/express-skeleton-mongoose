@@ -13,7 +13,7 @@ module.exports = {
         email: 'troy@example.com',
         password: 'topsecret'
       }
-    ], {individualHooks: true});
+    ], { individualHooks: true });
   },
 
   down: function (queryInterface, Sequelize) {

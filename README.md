@@ -29,7 +29,7 @@ npm start
 I use `jasmine` and `zombie` for testing. Install `jasmine` globally:
 
 ```
-npm install -g jasmine-node
+npm install -g jasmine
 ```
 
 Run the tests:

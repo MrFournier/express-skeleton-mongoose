@@ -40,7 +40,7 @@ describe('authentication', function() {
   });
 
   it('displays the login form if not logged in', function() {
-    browser.assert.attribute('form', 'action', '/login')
+    browser.assert.attribute('form', 'action', '/login');
   });
 
   it('does not display the logout button if not logged in', function() {
@@ -69,8 +69,8 @@ describe('authentication', function() {
           .clickLink('Logout', function(err) {
             browser.assert.success();
             expect(browser.query("a[href='/logout']")).toBeNull();
-            browser.assert.attribute('form', 'action', '/login')
-            done()
+            browser.assert.attribute('form', 'action', '/login');
+            done();
           });
       });
     });

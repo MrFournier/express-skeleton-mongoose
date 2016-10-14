@@ -70,12 +70,6 @@ docker exec -it accountant_postgres_1 bash
 > psql -d accountant_staging -U accountant
 ```
 
-## Execute
-
-```
-DEBUG=accountant:* & npm start
-```
-
 # Production
 
 Coming soon...

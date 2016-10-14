@@ -2,6 +2,13 @@ const Browser = require('zombie');
 const fixtures = require('sequelize-fixtures');
 const models = require('../../models'); 
 
+// Start test server
+//
+// Watch out for this. I may need to shutdown this server
+// once more test files are written.
+const app = require('../../app');
+const http = require('http').createServer(app).listen(3000);
+
 Browser.localhost('example.com', 3000);
 
 describe('authentication', function() {
@@ -14,7 +21,9 @@ describe('authentication', function() {
       fixtures.loadFile('fixtures/agents.json', models).then(function() {
         models.Agent.findOne().then(function(results) {
           agent = results;
-          browser.visit('/', function() {
+          // browser.debug();
+          browser.visit('/', function(err) {
+            if (err) console.log(err);
             browser.assert.success();
             done();
           });
@@ -27,7 +36,7 @@ describe('authentication', function() {
   });
 
   it('shows the home page', function() {
-    browser.assert.text('h1', 'Accountant');
+    browser.assert.text('h1', 'Express Skeleton');
   });
 
   it('displays the login form if not logged in', function() {

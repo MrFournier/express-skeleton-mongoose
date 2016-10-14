@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "NODE_ENV=test jasmine"
+    "test": "NODE_ENV=test node_modules/.bin/jasmine"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -24,6 +24,7 @@
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
+    "jasmine": "^2.5.2",
     "nodemon": "^1.11.0",
     "sequelize-fixtures": "^0.5.5",
     "sqlite3": "^3.1.6",

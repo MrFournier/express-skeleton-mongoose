@@ -26,11 +26,7 @@ npm start
 
 # Testing
 
-I use `jasmine` and `zombie` for testing. Install `jasmine` globally:
-
-```
-npm install -g jasmine
-```
+I use `jasmine` and `zombie` for testing. These are included in the package's development dependencies.
 
 Run the tests:
 

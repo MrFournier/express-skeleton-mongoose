@@ -110,9 +110,34 @@ cd ../express-skeleton
 docker-compose -f docker-compose.prod.yml up -d
 ```
 
+## Create sessions table
+
+The default session storage mechanism is not meant for production. Hand this over to `postgres`:
+
+```
+docker exec -i expressskeleton_postgres_1 psql -U skeleton -d skeleton_production < node_modules/connect-pg-simple/table.sql
+```
+
 ## Seed
 
 ```
 docker-compose run -e NODE_ENV=production --rm node node_modules/.bin/sequelize db:seed:all
 ```
+
+## General Docker debugging
+
+[Docker sometimes uses up all the `inodes`](https://github.com/docker/docker/issues/10613). This happened to me while working out the production deployment kinks.
+
+Remove stopped containers:
+
+```
+docker rm $(docker ps -a -q)
+```
+
+Remove dangling images:
+
+```
+docker rmi $(docker images -q --filter "dangling=true")
+```
+
 

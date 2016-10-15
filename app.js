@@ -33,7 +33,9 @@ app.use(cookieParser());
 
 app.use(flash());
 
-// Sessions
+/**
+ * Sessions
+ */
 var session = require('express-session');
 var env = process.env.NODE_ENV || 'development';
 var config = require(__dirname + '/config/config.json')[env];
@@ -58,22 +60,10 @@ if (env == 'production') {
 }
 
 app.use(session(sessionConfig));
-//app.use(session({
-//  store: new pgSession({
-//    pg: pg,
-//    conString:
-//      'postgres://' + 
-//      config.username + ':' +
-//      config.password + '@' +
-//      config.host + ':5432/' +
-//      config.database 
-//  }),
-//  secret: 'supersecretkey',
-//  resave: false,
-//  saveUninitialized: false
-//}));
 
-// Passport
+/**
+ * Passport
+ */
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy({
@@ -98,6 +88,9 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
+/**
+ * Routes
+ */
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);

@@ -1,23 +1,23 @@
 node:
   build: .
   #  restart: always
-  command: node ./bin/www DEBUG=accountant:*
+  command: node ./bin/www DEBUG=skeleton:*
   environment:
     NODE_ENV: staging
   ports:
     - '3000:3000'
   volumes:
-    - .:/home/app/accountant
-    - /home/app/accountant/node_modules
+    - .:/home/app/skeleton
+    - /home/app/skeleton/node_modules
   links:
    - postgres
 postgres:
   #  restart: always
   image: postgres
   environment:
-    - POSTGRES_USER=accountant
+    - POSTGRES_USER=skeleton
     - POSTGRES_PASSWORD=secret
-    - POSTGRES_DB=accountant_staging
+    - POSTGRES_DB=skeleton_staging
   volumes_from:
-    - accountant_data
+    - skeleton_data
 

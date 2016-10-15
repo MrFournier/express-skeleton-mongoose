@@ -31,13 +31,49 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// Passport
 app.use(flash());
-app.use(require('express-session')({
-  secret: 'whatisthisexactly',
+
+// Sessions
+var session = require('express-session');
+var env = process.env.NODE_ENV || 'development';
+var config = require(__dirname + '/config/config.json')[env];
+
+var sessionConfig = {
+  secret: 'supersecretkey',
   resave: false,
   saveUninitialized: false
-}));
+};
+
+if (env == 'production') {
+  var pgSession = require('connect-pg-simple')(session);
+  sessionConfig.store = new pgSession({
+    pg: require('pg'),
+    conString:
+      'postgres://' + 
+      config.username + ':' +
+      config.password + '@' +
+      config.host + ':5432/' +
+      config.database 
+  });
+}
+
+app.use(session(sessionConfig));
+//app.use(session({
+//  store: new pgSession({
+//    pg: pg,
+//    conString:
+//      'postgres://' + 
+//      config.username + ':' +
+//      config.password + '@' +
+//      config.host + ':5432/' +
+//      config.database 
+//  }),
+//  secret: 'supersecretkey',
+//  resave: false,
+//  saveUninitialized: false
+//}));
+
+// Passport
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy({

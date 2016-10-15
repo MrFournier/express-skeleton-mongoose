@@ -9,17 +9,17 @@ RUN useradd --user-group --create-home --shell /bin/false app &&\
 
 ENV HOME=/home/app
 
-#COPY package.json npm-shrinkwrap.json $HOME/accountant/
-COPY package.json $HOME/accountant/
+#COPY package.json npm-shrinkwrap.json $HOME/skeleton/
+COPY package.json $HOME/skeleton/
 RUN chown -R app:app $HOME/*
 
 USER app
-WORKDIR $HOME/accountant
+WORKDIR $HOME/skeleton
 
 RUN npm install
 
 USER root
-COPY . $HOME/accountant
+COPY . $HOME/skeleton
 RUN chown -R app:app $HOME/*
 USER app
 

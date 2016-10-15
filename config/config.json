@@ -8,16 +8,16 @@
     "storage": "db.test.sqlite"
   },
   "staging": {
-    "username": "accountant",
+    "username": "skeleton",
     "password": "secret",
-    "database": "accountant_staging",
+    "database": "skeleton_staging",
     "host": "postgres",
     "dialect": "postgres"
   },
   "production": {
-    "username": "accountant",
+    "username": "skeleton",
     "password": "secret",
-    "database": "accountant_production",
+    "database": "skeleton_production",
     "host": "postgres",
     "dialect": "postgres"
   }

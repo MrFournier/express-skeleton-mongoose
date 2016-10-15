@@ -8,8 +8,8 @@ nginx:
   volumes:
     - ./config/nginx.conf:/etc/nginx/nginx.conf
   links:
-    - node:node
-node:
+    - node-app:node-app
+node-app:
   build: .
   restart: always
   command: node ./bin/www

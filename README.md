@@ -40,7 +40,7 @@ npm test
 
 Create a data volume for PostgreSQL:                                                                                                                                                                         
 ```
-docker create --name accountant_data -v /dbdata postgres /bin/true
+docker create --name skeleton_data -v /dbdata postgres /bin/true
 ``` 
 
 ## docker-compose
@@ -66,11 +66,53 @@ node_modules/.bin/sequelize db:migrate:undo:all
 ### Debug Postgres container
 
 ```
-docker exec -it accountant_postgres_1 bash
-> psql -d accountant_staging -U accountant
+docker exec -it skeleton_postgres_1 bash
+> psql -d skeleton_staging -U skeleton
 ```
 
 # Production
 
-Coming soon...
+Set this up behind an `nginx`/`jrcs/letsencrypt-nginx-proxy-companion` combo. Create a new directory just for this combo:
+
+```
+mkdir nginx-proxy && cd nginx-proxy
+```
+
+Copy and paste the following to a `docker-compose.yml` file:
+
+```
+nginx-proxy:
+  image: jwilder/nginx-proxy
+  restart: always
+  ports:
+    - "80:80"
+    - "443:443"
+  volumes:                     
+    - ./current/public:/usr/share/nginx/html
+    - ./certs:/etc/nginx/certs:ro
+    - /etc/nginx/vhost.d
+    - /usr/share/nginx/html
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+letsencrypt:
+  image: jrcs/letsencrypt-nginx-proxy-companion
+  restart: always
+  volumes:
+    - ./certs:/etc/nginx/certs:rw
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+  volumes_from:
+    - nginx-proxy
+```
+
+Then, from the project directory:
+
+```
+cd ../express-skeleton
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+## Seed
+
+```
+docker-compose run -e NODE_ENV=production --rm node node_modules/.bin/sequelize db:seed:all
+```
 

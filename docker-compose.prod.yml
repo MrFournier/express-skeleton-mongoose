@@ -1,6 +1,33 @@
-accountant:
+nginx:
+  image: nginx
+  restart: always
+  environment:
+    - VIRTUAL_HOST=chocobuttons.com
+    - LETSENCRYPT_HOST=chocobuttons.com
+    - LETSENCRYPT_EMAIL=daniel@capitolhill.ca
+  volumes:
+    - ./config/nginx.conf:/etc/nginx/nginx.conf
+  links:
+    - node:node
+node:
   build: .
+  restart: always
+  command: node ./bin/www
   environment:
     NODE_ENV: production
   ports:
-    - '80:3000'
+    - '3000'
+  volumes:
+    - .:/home/app/skeleton
+    - /home/app/skeleton/node_modules
+  links:
+   - postgres
+postgres:
+  restart: always
+  image: postgres
+  environment:
+    - POSTGRES_USER=skeleton
+    - POSTGRES_PASSWORD=secret
+    - POSTGRES_DB=skeleton_production
+  volumes_from:
+    - skeleton_data

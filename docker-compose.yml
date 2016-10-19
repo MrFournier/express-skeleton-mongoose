@@ -1,6 +1,5 @@
 node:
   build: .
-  #  restart: always
   command: node ./bin/www DEBUG=skeleton:*
   environment:
     NODE_ENV: staging
@@ -10,14 +9,11 @@ node:
     - .:/home/app/skeleton
     - /home/app/skeleton/node_modules
   links:
-   - postgres
-postgres:
-  #  restart: always
-  image: postgres
-  environment:
-    - POSTGRES_USER=skeleton
-    - POSTGRES_PASSWORD=secret
-    - POSTGRES_DB=skeleton_staging
+   - mongo
+mongo:  
+  image: mongo:3.0.4
   volumes_from:
-    - skeleton_data
-
+    - skeleton_mongo_data
+  ports:
+    - "27017"
+  command: --smallfiles #--rest --auth

@@ -1,22 +1,28 @@
-express-skeleton
-================
+express-skeleton-mongoose
+=========================
 
-Quick start Express skeleton app with tests.
+Quick start Express skeleton app with tests and the Mongoose ODM.
 
 # Development
 
 Clone and install dependencies:
 
 ```
-git clone https://github.com/RaphaelDeLaGhetto/express-skeleton.git
-cd express-skeleton && npm install
+git clone https://github.com/RaphaelDeLaGhetto/express-skeleton-mongoose.git
+cd express-skeleton-mongoose && npm install
 ```
 
-Seed database:
+Start a MongoDB development server:
 
 ```
-node_modules/.bin/sequelize db:seed:all
+docker run --name dev-mongo -p 27017:27017 -d mongo
 ```
+
+#Seed database:
+#
+#```
+#node_modules/.bin/sequelize db:seed:all
+#```
 
 Run server:
 
@@ -36,11 +42,11 @@ npm test
 
 # Staging
 
-## Docker Postgres
+## Docker MongoDB
 
-Create a data volume for PostgreSQL:                                                                                                                                                                         
+Create a data volume for MongoDB:                                                                                                                                                                         
 ```
-docker create --name skeleton_data -v /dbdata postgres /bin/true
+docker create --name skeleton_mongo_data -v /dbdata mongo /bin/true
 ``` 
 
 ## docker-compose
@@ -52,9 +58,9 @@ docker-compose up
 ```
 
 ## Seed
-
-```
-docker-compose run --rm node node_modules/.bin/sequelize db:seed:all
+#
+#```
+#docker-compose run --rm node node_modules/.bin/sequelize db:seed:all
 ```
 
 What's the fastest way to reset the database? I've been running this:
@@ -63,11 +69,10 @@ What's the fastest way to reset the database? I've been running this:
 node_modules/.bin/sequelize db:migrate:undo:all
 ```
 
-### Debug Postgres container
+### Debug Mongo container
 
 ```
-docker exec -it skeleton_postgres_1 bash
-> psql -d skeleton_staging -U skeleton
+docker exec -it skeleton_mongo_1 mongo
 ```
 
 # Production
@@ -106,23 +111,23 @@ letsencrypt:
 Then, from the project directory:
 
 ```
-cd ../express-skeleton
+cd ../express-skeleton-mongoose
 docker-compose -f docker-compose.prod.yml up -d
 ```
 
 ## Create sessions table
-
-The default session storage mechanism is not meant for production. Hand this over to `postgres`:
-
-```
-docker exec -i expressskeleton_postgres_1 psql -U skeleton -d skeleton_production < node_modules/connect-pg-simple/table.sql
-```
+#
+#The default session storage mechanism is not meant for production. Hand this over to `postgres`:
+#
+#```
+#docker exec -i expressskeletonmongoose_postgres_1 psql -U skeleton -d skeleton_production < node_modules/connect-pg-simple/table.sql
+#```
 
 ## Seed
-
-```
-docker-compose run -e NODE_ENV=production --rm node node_modules/.bin/sequelize db:seed:all
-```
+#
+#```
+#docker-compose run -e NODE_ENV=production --rm node node_modules/.bin/sequelize db:seed:all
+#```
 
 ## General Docker debugging
 

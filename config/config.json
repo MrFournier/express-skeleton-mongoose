@@ -1,24 +1,28 @@
 {
   "development": {
-    "dialect": "sqlite",
-    "storage": "db.development.sqlite"
+    "username": "skeleton",
+    "password": "secret",
+    "database": "skeleton_development",
+    "host": "localhost"
   },
   "test": {
-    "dialect": "sqlite",
-    "storage": "db.test.sqlite"
+    "username": "skeleton",
+    "password": "secret",
+    "database": "skeleton_test",
+    "host": "localhost"
   },
   "staging": {
     "username": "skeleton",
     "password": "secret",
     "database": "skeleton_staging",
-    "host": "postgres",
+    "host": "mongodb",
     "dialect": "postgres"
   },
   "production": {
     "username": "skeleton",
     "password": "secret",
     "database": "skeleton_production",
-    "host": "postgres",
+    "host": "mongodb",
     "dialect": "postgres"
   }
 }

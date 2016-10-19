@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "jasmine": "^2.5.2",
-    "mongoose-seed-plus": "^0.1.2",
+    "mongoose-seeder": "^1.2.1",
     "nodemon": "^1.11.0",
     "pow-mongoose-fixtures": "^0.3.0",
     "sequelize-fixtures": "^0.5.5",

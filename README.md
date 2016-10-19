@@ -25,11 +25,11 @@ docker stop dev-mongo
 docker start dev-mongo
 ```
 
-#Seed database:
-#
-#```
-#node_modules/.bin/sequelize db:seed:all
-#```
+Seed database:
+
+```
+node seed.js
+```
 
 Run server:
 

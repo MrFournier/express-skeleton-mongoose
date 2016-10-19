@@ -1,3 +1,5 @@
+"use strict";
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -46,18 +48,18 @@ var sessionConfig = {
   saveUninitialized: false
 };
 
-if (env == 'production') {
-  var pgSession = require('connect-pg-simple')(session);
-  sessionConfig.store = new pgSession({
-    pg: require('pg'),
-    conString:
-      'postgres://' + 
-      config.username + ':' +
-      config.password + '@' +
-      config.host + ':5432/' +
-      config.database 
-  });
-}
+//if (env == 'production') {
+//  var pgSession = require('connect-pg-simple')(session);
+//  sessionConfig.store = new pgSession({
+//    pg: require('pg'),
+//    conString:
+//      'postgres://' + 
+//      config.username + ':' +
+//      config.password + '@' +
+//      config.host + ':5432/' +
+//      config.database 
+//  });
+//}
 
 app.use(session(sessionConfig));
 
@@ -70,7 +72,7 @@ passport.use(new LocalStrategy({
     usernameField: 'email'
   },
   function(email, password, done) {
-    models.Agent.findOne({ where: { email: email } }).then(function (agent) {
+    models.Agent.findOne({ email: email }).then(function (agent) {
       if (!agent) { return done(null, false); }
       models.Agent.validPassword(password, agent.password, function(err, res) {
         if (err) console.log(err);

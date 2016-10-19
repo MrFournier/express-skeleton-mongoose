@@ -1,5 +1,6 @@
+'use strict';
+
 describe('Agent', function() {
-  var Sequelize = require('sequelize');
   var db = require('../../models');
   var Agent = db.Agent;
 
@@ -7,11 +8,15 @@ describe('Agent', function() {
 
   describe('basic validation', function() {
     beforeEach(function(done) {
-      db.sequelize.sync({ force: true }).then(function(obj) {
-        agent = Agent.build({ email: 'someguy@example.com', password: 'secret' });
+      agent = new Agent({ email: 'someguy@example.com', password: 'secret' });
+      done();
+    });
+
+    afterEach(function(done) {
+      db.mongoose.connection.db.dropDatabase().then(function(err, result) {
         done();
-      }).catch(function(error) {
-        done.fail(error);
+      }).catch(function(err) {
+        done.fail(err);         
       });
     });
   
@@ -42,8 +47,8 @@ describe('Agent', function() {
         Agent.create({ email: 'someguy@example.com', password: 'secret' }).then(function(obj) {
           done.fail('This should not have saved');
         }).catch(function(error) {
-          expect(error.errors.length).toEqual(1);
-          expect(error.errors[0].message).toEqual('That email is taken');
+          expect(Object.keys(error.errors).length).toEqual(1);
+          expect(error.errors['email'].message).toEqual('That email is taken');
           done();
         });
       }).catch(function(error) {
@@ -55,6 +60,8 @@ describe('Agent', function() {
       Agent.create({ email: ' ', password: 'secret' }).then(function(obj) {
         done.fail('This should not have saved');
       }).catch(function(error) {
+        expect(Object.keys(error.errors).length).toEqual(1);
+        expect(error.errors['email'].message).toEqual('No email supplied');
         done();
       });
     });
@@ -63,6 +70,8 @@ describe('Agent', function() {
       Agent.create({ password: 'secret' }).then(function(obj) {
         done.fail('This should not have saved');
       }).catch(function(error) {
+        expect(Object.keys(error.errors).length).toEqual(1);
+        expect(error.errors['email'].message).toEqual('No email supplied');
         done();
       });
     });
@@ -71,6 +80,8 @@ describe('Agent', function() {
       Agent.create({ email: 'someguy@example.com', password: '   ' }).then(function(obj) {
         done.fail('This should not have saved');
       }).catch(function(error) {
+        expect(Object.keys(error.errors).length).toEqual(1);
+        expect(error.errors['password'].message).toEqual('No password supplied');
         done();
       });
     });
@@ -79,6 +90,8 @@ describe('Agent', function() {
       Agent.create({ email: 'someguy@example.com' }).then(function(obj) {
         done.fail('This should not have saved');
       }).catch(function(error) {
+        expect(Object.keys(error.errors).length).toEqual(1);
+        expect(error.errors['password'].message).toEqual('No password supplied');
         done();
       });
     });
@@ -117,7 +130,6 @@ describe('Agent', function() {
           done();
         }, agent);
       });
-
     });
   });
 });

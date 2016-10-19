@@ -1,6 +1,9 @@
+'use strict';
+
 const Browser = require('zombie');
-const fixtures = require('sequelize-fixtures');
+const fixtures = require('pow-mongoose-fixtures');
 const models = require('../../models'); 
+const path = require('path');
 
 // Start test server
 //
@@ -17,22 +20,19 @@ describe('authentication', function() {
 
   beforeEach(function(done) {
     browser = new Browser();
-    models.sequelize.sync({ force: true }).then(function(obj) {
-      fixtures.loadFile('fixtures/agents.json', models).then(function() {
-        models.Agent.findOne().then(function(results) {
-          agent = results;
-          // browser.debug();
-          browser.visit('/', function(err) {
-            if (err) console.log(err);
-            browser.assert.success();
-            done();
-          });
+    fixtures.load(__dirname + '/../fixtures/agents.js', models.mongoose, function(err) {
+      models.Agent.findOne().then(function(results) {
+        agent = results;
+        // browser.debug();
+        browser.visit('/', function(err) {
+          if (err) console.log(err);
+          browser.assert.success();
+          done();
         });
+      }).catch(function(error) {
+        done.fail(error);
       });
-    }).catch(function(error) {
-      done.fail(error);
     });
-
   });
 
   it('shows the home page', function() {
@@ -47,13 +47,13 @@ describe('authentication', function() {
     expect(browser.query("a[href='/logout']")).toBeNull();
   });
 
-
   describe('login process', function() {
     beforeEach(function(done) {
       browser
         .fill('email', agent.email)
         .fill('password', 'secret')
         .pressButton('Login', function(err) {
+          if (err) console.log('ERROR ' + err);
           browser.assert.success();
           done();
         });

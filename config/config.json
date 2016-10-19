@@ -15,14 +15,14 @@
     "username": "skeleton",
     "password": "secret",
     "database": "skeleton_staging",
-    "host": "mongodb",
-    "dialect": "postgres"
+    "host": "mongo",
+    "dialect": "mongodb"
   },
   "production": {
     "username": "skeleton",
     "password": "secret",
     "database": "skeleton_production",
-    "host": "mongodb",
-    "dialect": "postgres"
+    "host": "mongo",
+    "dialect": "mongodb"
   }
 }

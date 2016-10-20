@@ -160,7 +160,15 @@ Remove dangling images:
 docker rmi $(docker images -q --filter "dangling=true")
 ```
 
-Smoke this directory (https://github.com/docker/docker/issues/9755):
+[Find out](http://www.jagregory.com/writings/docker-container-out-of-space/) where all your inodes are going:
+
+```
+sudo find . -xdev -type f | cut -d "/" -f 2 | sort | uniq -c | sort -n
+```
+
+Remove the offending directory: e.g.: `rm -rf node_modules`.
+
+As a last resort, smoke this directory (https://github.com/docker/docker/issues/9755):
 
 ```
 sudo rm -rf /var/lib/docker

@@ -21,13 +21,11 @@ node-app:
     - .:/home/app/skeleton
     - /home/app/skeleton/node_modules
   links:
-   - postgres
-postgres:
-  restart: always
-  image: postgres
-  environment:
-    - POSTGRES_USER=skeleton
-    - POSTGRES_PASSWORD=secret
-    - POSTGRES_DB=skeleton_production
+   - mongo
+mongo:  
+  image: mongo
   volumes_from:
-    - skeleton_data
+    - skeleton_mongo_data
+  ports:
+    - "27017"
+  command: --smallfiles #--rest --auth

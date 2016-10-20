@@ -11,7 +11,7 @@ node:
   links:
    - mongo
 mongo:  
-  image: mongo #:3.0.4
+  image: mongo
   volumes_from:
     - skeleton_mongo_data
   ports:

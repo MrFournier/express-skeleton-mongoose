@@ -65,16 +65,10 @@ docker-compose up
 ```
 
 ## Seed
-#
-#```
-#docker-compose run --rm node node_modules/.bin/sequelize db:seed:all
-#```
-#
-#What's the fastest way to reset the database? I've been running this:
-#
-#```
-#node_modules/.bin/sequelize db:migrate:undo:all
-#```
+
+```
+docker-compose run --rm node node seed.js NODE_ENV=staging 
+```
 
 ### Debug Mongo container
 
@@ -140,7 +134,7 @@ docker-compose -f docker-compose.prod.yml up -d
 
 [Docker sometimes uses up all the `inodes`](https://github.com/docker/docker/issues/10613). This happened to me while working out the production deployment kinks.
 
-Remove stopped containers:
+Remove stopped containers (_BEWARE_: this removes data-only containers as well):
 
 ```
 docker rm $(docker ps -a -q)
@@ -150,6 +144,12 @@ Remove dangling images:
 
 ```
 docker rmi $(docker images -q --filter "dangling=true")
+```
+
+Smoke this directory (https://github.com/docker/docker/issues/9755):
+
+```
+sudo rm -rf /var/lib/docker
 ```
 
 

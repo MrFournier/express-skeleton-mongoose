@@ -116,6 +116,40 @@ cd ../express-skeleton-mongoose
 docker-compose -f docker-compose.prod.yml up -d
 ```
 
+## Docker MongoDB
+
+Create a data volume for MongoDB:
+
+```
+docker create --name skeleton_mongo_data -v /dbdata mongo /bin/true
+``` 
+
+## docker-compose
+
+You may need to run this twice:
+
+```
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+## Seed
+
+```
+docker-compose -f docker-compose.prod.yml run --rm node-app node seed.js NODE_ENV=production
+```
+
+### Debug Mongo container
+
+```
+docker exec -it expressskeletonmongoose_mongo_1 mongo
+```
+
+
+
+
+
+
+
 ## Create sessions table
 #
 #The default session storage mechanism is not meant for production. Hand this over to `postgres`:
@@ -129,6 +163,7 @@ docker-compose -f docker-compose.prod.yml up -d
 #```
 #docker-compose run -e NODE_ENV=production --rm node node_modules/.bin/sequelize db:seed:all
 #```
+
 
 ## General Docker debugging
 

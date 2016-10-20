@@ -39,6 +39,7 @@ app.use(flash());
  * Sessions
  */
 var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 var env = process.env.NODE_ENV || 'development';
 var config = require(__dirname + '/config/config.json')[env];
 
@@ -48,18 +49,9 @@ var sessionConfig = {
   saveUninitialized: false
 };
 
-//if (env == 'production') {
-//  var pgSession = require('connect-pg-simple')(session);
-//  sessionConfig.store = new pgSession({
-//    pg: require('pg'),
-//    conString:
-//      'postgres://' + 
-//      config.username + ':' +
-//      config.password + '@' +
-//      config.host + ':5432/' +
-//      config.database 
-//  });
-//}
+if (env == 'production') {
+  sessionConfig.store = new MongoStore({ mongooseConnection: models });
+}
 
 app.use(session(sessionConfig));
 

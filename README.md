@@ -144,7 +144,7 @@ docker-compose -f docker-compose.prod.yml run --rm node-app node seed.js NODE_EN
 docker exec -it expressskeletonmongoose_mongo_1 mongo
 ```
 
-## General Docker debugging
+# General Docker debugging
 
 [Docker sometimes uses up all the `inodes`](https://github.com/docker/docker/issues/10613). This happened to me while working out the production deployment kinks.
 
